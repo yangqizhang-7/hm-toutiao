@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <el-button type="danger" round>危险按钮</el-button>
+    <!-- 一级路由的容器 -->
+    <router-view />
   </div>
 </template>
 
@@ -10,5 +11,4 @@ export default {
 }
 </script>
 
-<style lang="less">
-</style>
+<style lang="less"></style>
