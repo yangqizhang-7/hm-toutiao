@@ -5,11 +5,11 @@
     <el-card>
       <img src="../../assets/logo_index.png" alt />
       <!-- 表单 -->
-      <el-form :model="LoginForm">
-        <el-form-item>
+      <el-form :model="LoginForm" :rules="LoginRules" ref="loginForm" status-icon>
+        <el-form-item prop="mobile">
           <el-input v-model="LoginForm.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item prop="code">
           <el-input
             v-model="LoginForm.code"
             placeholder="请输入验证码"
@@ -21,7 +21,7 @@
           <el-checkbox :value="true">我已阅读并同意用户协议和隐私条款</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit" style="width:100%;">登录</el-button>
+          <el-button type="primary" @click="login" style="width:100%;">登录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -31,11 +31,55 @@
 <script>
 export default {
   data () {
+    const checkMobile = (rule, value, callback) => {
+      if (/^1[3-9]\d{9}$/.test(value)) {
+        callback()
+      } else {
+        callback(new Error('手机号格式错误'))
+      }
+    }
     return {
       LoginForm: {
         mobile: '',
         code: ''
+      },
+      LoginRules: {
+        mobile: [
+          { required: true, message: '请输入手机号', tigger: 'blur' },
+          { validator: checkMobile, trigger: 'blur' }
+        ],
+        code: [
+          {
+            required: true,
+            message: '请输入验证码',
+            tigger: 'blur'
+          },
+          {
+            len: 6,
+            message: '验证码位数为6',
+            tigger: 'blur'
+          }
+        ]
       }
+    }
+  },
+  methods: {
+    login () {
+      this.$refs['loginForm'].validate(valid => {
+        if (valid) {
+          this.$http
+            .post('authorizations', this.LoginForm)
+            .then(res => {
+              this.$router.push('/home')
+            })
+            .catch(() => {
+              this.$message.error({
+                message: '手机号或验证码不正确',
+                center: true
+              })
+            })
+        }
+      })
     }
   }
 }
@@ -45,7 +89,6 @@ export default {
 .container {
   width: 100%;
   height: 100%;
-  background: pink;
   position: absolute;
   left: 0;
   top: 0;
