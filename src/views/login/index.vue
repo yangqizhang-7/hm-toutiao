@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import local from '@/utils/local'
+
 export default {
   data () {
     const checkMobile = (rule, value, callback) => {
@@ -40,8 +42,8 @@ export default {
     }
     return {
       LoginForm: {
-        mobile: '',
-        code: ''
+        mobile: '17777777777',
+        code: '246810'
       },
       LoginRules: {
         mobile: [
@@ -65,19 +67,17 @@ export default {
   },
   methods: {
     login () {
-      this.$refs['loginForm'].validate(valid => {
+      // 对整个表单进行校验
+      this.$refs['loginForm'].validate(async valid => {
         if (valid) {
-          this.$http
-            .post('authorizations', this.LoginForm)
-            .then(res => {
-              this.$router.push('/home')
-            })
-            .catch(() => {
-              this.$message.error({
-                message: '手机号或验证码不正确',
-                center: true
-              })
-            })
+          // 以下代码可能出现异常（报错）  使用try{ 可能报错代码 }catch(e){ 处理错误 }
+          try {
+            const { data: { data } } = await this.$http.post('authorizations', this.LoginForm)
+            local.setUser(data)
+            this.$router.push('/home')
+          } catch (e) {
+            this.$message.error('手机号或验证码错误')
+          }
         }
       })
     }
