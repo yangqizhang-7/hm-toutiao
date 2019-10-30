@@ -4,6 +4,8 @@ import Login from '@/views/login'
 import Home from '@/views/home'
 import Welcome from '@/views/welcome'
 import NotFound from '@/views/404'
+import Article from '@/views/articles'
+import Setting from '@/views/setting'
 
 import local from '@/utils/local'
 Vue.use(VueRouter)
@@ -16,7 +18,11 @@ const router = new VueRouter({
       path: '/home',
       component: Home,
       // 二级路由
-      children: [{ path: '/', component: Welcome }]
+      children: [
+        { path: '/', component: Welcome },
+        { path: '/article', component: Article },
+        { path: '/setting', component: Setting }
+      ]
     },
     // 404
     { path: '*', component: NotFound }

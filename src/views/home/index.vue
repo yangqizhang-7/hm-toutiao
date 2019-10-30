@@ -5,7 +5,7 @@
       <div class="logo" :class="{smallLogo:!isOpen}"></div>
       <!-- 导航菜单 -->
       <el-menu
-        default-active="/home"
+        :default-active="$route.path"
         background-color="#002033"
         text-color="#fff"
         active-text-color="#0eaa"
