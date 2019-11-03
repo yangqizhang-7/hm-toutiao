@@ -4,11 +4,11 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import router from '@/router'
 import axios from '@/api'
-import MyBread from '@/components/my-bread'
-
-// 封装好的面包屑  全局组件
-Vue.component('my-bread', MyBread)
-
+// 导入上传图片的css样式
+import '@/styles/index.less'
+// 全局的插件引入
+import plugin from '@/components'
+Vue.use(plugin)
 Vue.prototype.$http = axios
 
 Vue.use(ElementUI)

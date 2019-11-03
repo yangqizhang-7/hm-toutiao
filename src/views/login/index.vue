@@ -42,13 +42,13 @@ export default {
     }
     return {
       LoginForm: {
-        mobile: '17777777777',
+        mobile: '17700007777',
         code: '246810'
       },
       LoginRules: {
         mobile: [
           { required: true, message: '请输入手机号', tigger: 'blur' },
-          { validator: checkMobile, trigger: 'blur' }
+          { validator: checkMobile, tigger: 'blur' }
         ],
         code: [
           {

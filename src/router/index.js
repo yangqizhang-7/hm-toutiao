@@ -6,6 +6,7 @@ import Welcome from '@/views/welcome'
 import NotFound from '@/views/404'
 import Article from '@/views/articles'
 import Setting from '@/views/setting'
+import Image from '@/views/image'
 
 import local from '@/utils/local'
 Vue.use(VueRouter)
@@ -21,7 +22,8 @@ const router = new VueRouter({
       children: [
         { path: '/', component: Welcome },
         { path: '/article', component: Article },
-        { path: '/setting', component: Setting }
+        { path: '/setting', component: Setting },
+        { path: '/image', component: Image }
       ]
     },
     // 404
