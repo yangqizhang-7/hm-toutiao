@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import EventBus from '@/eventbus'
 import local from '@/utils/local'
 export default {
   data () {
@@ -87,6 +88,14 @@ export default {
     const user = local.getUser() || {}
     this.photo = user.photo
     this.name = user.name
+    // 绑定事件 updateName 修改用户名
+    EventBus.$on('updateName', (name) => {
+      this.name = name
+    })
+    // 绑定事件 updatePhoto 修改用户照片
+    EventBus.$on('updatePhoto', (photo) => {
+      this.photo = photo
+    })
   },
   methods: {
     toggleMenu () {
@@ -132,6 +141,7 @@ export default {
   }
   .el-header {
     border-bottom: 1px solid #ddd;
+    padding:0 10px;
     line-height: 60px;
     .icon {
       font-size: 30px;
